@@ -4,13 +4,15 @@ local cmd = vim.cmd
 local opt = vim.opt
 
 local modes = {
-  	["n"] = { "NORMAL", "NormalMode" },
-  	["i"] = { "INSERT", "InsertMode" },
-	["c"] = { "CMD",    "CmdMode"}
+  	["n"] = { "NORMAL",   "NormalMode" },
+  	["i"] = { "INSERT",   "InsertMode" },
+	["c"] = { "CMD",      "CmdMode"    },
+	["t"] = { "TERMINAL", "TermMode"   }
 }
 
 cmd('hi! NormalMode gui=bold guifg=#a6e3a1')
 cmd('hi! InsertMode gui=bold guifg=#89b4fa')
+cmd('hi! TermMode   gui=bold guifg=#cba6f7')
 cmd('hi! Separator guibg=NONE guifg=#FFFFFF')
 
 M.mode = function()
