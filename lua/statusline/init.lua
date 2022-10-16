@@ -4,10 +4,39 @@ local cmd = vim.cmd
 local opt = vim.opt
 
 local modes = {
-  	["n"] = { "NORMAL",   "NormalMode" },
-  	["i"] = { "INSERT",   "InsertMode" },
-	["c"] = { "CMD",      "CmdMode"    },
-	["t"] = { "TERMINAL", "TermMode"   }
+  	["n"]   = { "NORMAL",   "NormalMode" },
+  	["no"]  = { "NORMAL",   "NormalMode" },
+  	["niI"]  = { "NORMAL",   "NormalMode" },
+  	["niR"]  = { "NORMAL",   "NormalMode" },
+  	["niV"]  = { "NORMAL",   "NormalMode" },
+
+	["v"]   = { "VISUAL",   "VisualMode" },
+	["V"]   = { "VISUAL",   "VisualMode" },
+	[""]  = { "VISUAL",   "VisualMode" },
+
+	["s"]   = { "SELECT",   "SelectMode" },
+	["S"]   = { "SELECT",   "SelectMode" },
+	[""]  = { "SELECT",   "SelectMode" },
+
+  	["i"]   = { "INSERT",   "InsertMode" },
+  	["ic"]  = { "INSERT",   "InsertMode" },
+  	["ix"]  = { "INSERT",   "InsertMode" },
+
+  	["R"]   = { "REPLACE",   "ReplaceMode" },
+  	["Rv"]  = { "REPLACE",   "ReplaceMode" },
+
+	["c"]   = { "COMMAND",   "CmdMode"    },
+	["cv"]  = { "COMMAND",   "CmdMode"    },
+	["ce"]  = { "COMMAND",   "CmdMode"    },
+
+	["r"]    = { "PROMPT",   "PromptMode" },
+	["rm"]   = { "PROMPT",   "PromptMode" },
+	["r?"]   = { "PROMPT",   "PromptMode" },
+
+	["!"]   = { "TERMINAL",   "TermMode" },
+
+	["t"]  = { "TERMINAL", "TermMode"   },
+	["nt"]  = { "TERMINAL", "TermMode"   },
 }
 
 cmd('hi! NormalMode gui=bold guifg=#a6e3a1')
@@ -52,6 +81,15 @@ M.run = function()
 	str = str .. M.lsp()
 
 	return str
+end
+
+M.setup = function()
+	vim.api.nvim_exec([[
+		augroup Statusline
+		au!
+		au WinEnter,BufEnter * sil! setlocal statusline=%!v:lua.require('statusline').run()
+		augroup END
+	]], false)
 end
 
 return M

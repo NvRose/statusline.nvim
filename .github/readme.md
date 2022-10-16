@@ -11,10 +11,6 @@ use {
 }
 ```
 
-### Roadmap
-- FIXME:
-	- error: E15: Invalid expression: v:lua.require("statusline").run()
-
 ### 📜 License
 NvRose is released under MIT license, which grants the following permissions:
 - Commercial use
