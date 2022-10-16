@@ -59,8 +59,10 @@ M.lsp = function()
 		local count
 		count = #vim.diagnostic.get(0, { severity = level })
 
+		ret = ret .. " "
+
 		if count ~= 0 then
-			ret = ret .. " %#LspDiagnostics" .. level .. "#" .. ico .. "%#Normal#" .. count
+			ret = ret .. "%#LspDiagnostics" .. level .. "#" .. ico .. "%#Normal#" .. count
 		end
 	end
 
