@@ -4,45 +4,39 @@ local cmd = vim.cmd
 local opt = vim.opt
 
 local modes = {
-  	["n"]   = { "NORMAL",   "NormalMode" },
-  	["no"]  = { "NORMAL",   "NormalMode" },
+  	["n"]    = { "NORMAL",   "NormalMode" },
+  	["no"]   = { "NORMAL",   "NormalMode" },
   	["niI"]  = { "NORMAL",   "NormalMode" },
   	["niR"]  = { "NORMAL",   "NormalMode" },
   	["niV"]  = { "NORMAL",   "NormalMode" },
 
-	["v"]   = { "VISUAL",   "VisualMode" },
-	["V"]   = { "VISUAL",   "VisualMode" },
-	[""]  = { "VISUAL",   "VisualMode" },
+	["v"]    = { "VISUAL",   "VisualMode" },
+	["V"]    = { "VISUAL",   "VisualMode" },
+	[""]   = { "VISUAL",   "VisualMode" },
 
-	["s"]   = { "SELECT",   "SelectMode" },
-	["S"]   = { "SELECT",   "SelectMode" },
-	[""]  = { "SELECT",   "SelectMode" },
+	["s"]    = { "SELECT",   "SelectMode" },
+	["S"]    = { "SELECT",   "SelectMode" },
+	[""]   = { "SELECT",   "SelectMode" },
 
-  	["i"]   = { "INSERT",   "InsertMode" },
-  	["ic"]  = { "INSERT",   "InsertMode" },
-  	["ix"]  = { "INSERT",   "InsertMode" },
+  	["i"]    = { "INSERT",   "InsertMode" },
+  	["ic"]   = { "INSERT",   "InsertMode" },
+  	["ix"]   = { "INSERT",   "InsertMode" },
 
-  	["R"]   = { "REPLACE",   "ReplaceMode" },
-  	["Rv"]  = { "REPLACE",   "ReplaceMode" },
+  	["R"]    = { "REPLACE",  "ReplaceMode" },
+  	["Rv"]   = { "REPLACE",  "ReplaceMode" },
 
-	["c"]   = { "COMMAND",   "CmdMode"    },
-	["cv"]  = { "COMMAND",   "CmdMode"    },
-	["ce"]  = { "COMMAND",   "CmdMode"    },
+	["c"]    = { "COMMAND",  "CmdMode"    },
+	["cv"]   = { "COMMAND",  "CmdMode"    },
+	["ce"]   = { "COMMAND",  "CmdMode"    },
 
 	["r"]    = { "PROMPT",   "PromptMode" },
 	["rm"]   = { "PROMPT",   "PromptMode" },
 	["r?"]   = { "PROMPT",   "PromptMode" },
 
-	["!"]   = { "TERMINAL",   "TermMode" },
-
-	["t"]  = { "TERMINAL", "TermMode"   },
-	["nt"]  = { "TERMINAL", "TermMode"   },
+	["!"]    = { "TERMINAL", "TermMode"   },
+	["t"]    = { "TERMINAL", "TermMode"   },
+	["nt"]   = { "TERMINAL", "TermMode"   },
 }
-
-cmd('hi! NormalMode gui=bold guifg=#a6e3a1')
-cmd('hi! InsertMode gui=bold guifg=#89b4fa')
-cmd('hi! TermMode   gui=bold guifg=#cba6f7')
-cmd('hi! Separator guibg=NONE guifg=#FFFFFF')
 
 M.mode = function()
 	local m = vim.api.nvim_get_mode().mode
@@ -84,12 +78,11 @@ M.run = function()
 end
 
 M.setup = function()
-	vim.api.nvim_exec([[
-		augroup Statusline
-		au!
-		au WinEnter,BufEnter * sil! setlocal statusline=%!v:lua.require('statusline').run()
-		augroup END
-	]], false)
+	-- Lazy load statusline
+	vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
+		pattern = '*',
+		command = [[ sil! setlocal statusline=%!v:lua.require('statusline').run() ]]
+	})
 end
 
 return M
