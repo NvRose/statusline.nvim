@@ -41,7 +41,7 @@ local modes = {
 M.mode = function()
 	local m = vim.api.nvim_get_mode().mode
 	local current_mode = "%#" .. modes[m][2] .. "# " .. modes[m][1]
-	return current_mode .. "%#Normal#"
+	return current_mode
 end
 
 M.lsp = function()
@@ -80,11 +80,7 @@ M.run = function()
 end
 
 M.setup = function()
-	-- Lazy load statusline
-	vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
-		pattern = '*',
-		command = [[ sil! setlocal statusline=%!v:lua.require('statusline').run() ]]
-	})
+	vim.o.statusline = "%!v:lua.require('NvRose.base.statusline').run()"
 end
 
 return M
