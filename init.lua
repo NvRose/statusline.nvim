@@ -1,8 +1,5 @@
 local M = {}
 
-local cmd = vim.cmd
-local opt = vim.opt
-
 local modes = {
 	["n"] = { "NORMAL", "NormalMode" },
 	["no"] = { "NORMAL", "NormalMode" },
@@ -54,24 +51,23 @@ M.lsp = function()
 		["Hint"] = " ",
 	}
 
-	cmd("hi! link LspDiagnosticsWarn LspDiagnosticsWarning")
+	vim.cmd("hi! link LspDiagnosticsWarn LspDiagnosticsWarning")
 	for level, ico in pairs(levels) do
 		local count
 		count = #vim.diagnostic.get(0, { severity = level })
 
 		if count ~= 0 then
-			ret = ret .. "%#LspDiagnostics" .. level .. "#" .. ico .. "%#Normal#" .. count .. " "
+			ret = ret .. " %#LspDiagnostics" .. level .. "#" .. ico .. "%#StatusLineFill#" .. count
 		end
 	end
 
-	return ret
+	return ret .. " "
 end
 
 M.run = function()
-	local str = ""
-
+	local str = "%#StatusLineFill#"
 	str = str .. M.mode()
-	str = str .. "%=%#StatusLineExtra#"
+	str = str .. "%=%#StatusLineExtra#%#StatusLineFill#"
 	str = str .. M.lsp()
 
 	return str
