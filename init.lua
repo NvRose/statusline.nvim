@@ -51,7 +51,6 @@ M.lsp = function()
 		["Hint"] = " ",
 	}
 
-	vim.cmd("hi! link LspDiagnosticsWarn LspDiagnosticsWarning")
 	for level, ico in pairs(levels) do
 		local count
 		count = #vim.diagnostic.get(0, { severity = level })
